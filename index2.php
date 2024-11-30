@@ -43,18 +43,28 @@
                     case 'Gobelin':
                         $race = new Gobelin();
                         break;
-                    default:
-                        $race = new Nain();
-                        break;
                 }
 
                 switch ($role) {
                     case 'Guerrier':
                         $role = new Guerrier();
                         break;
-                    default:
-                        $role = new Guerrier();
+                    case 'Voleur':
+                        $role = new Voleur();
                         break;
+                    case 'Paladin':
+                        $role = new Paladin();
+                        break;
+                    case 'Magicien':
+                        $role = new Magicien();
+                        break;
+                    case 'Archer':
+                        $role = new Archer();
+                        break;
+                    case 'Berserker':
+                        $role = new Berserker();
+                        break;
+                 
                 }
 
                 switch ($arme) {
@@ -85,6 +95,7 @@
 
                     <label for="race">Race:</label>
                     <select id="race" name="characters[0][race]" required onchange="updateStats(0)">
+                        
                         <option value="Nain">Nain</option>
                         <option value="Gobelin">Gobelin</option>
                         <option value="Troll">Troll</option>
@@ -96,6 +107,11 @@
                     <label for="role">Rôle:</label>
                     <select id="role" name="characters[0][role]" required onchange="updateStats(0)">
                         <option value="Guerrier">Guerrier</option>
+                        <option value="Berserker">Berserker</option>
+                        <option value="Voleur">Voleur</option>
+                        <option value="Magicien">Magicien</option>
+                        <option value="Paladin">Paladin</option>
+                        <option value="Archer">Archer</option>
                     </select><br>
 
                     <label for="arme">Arme:</label>

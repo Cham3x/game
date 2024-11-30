@@ -8,6 +8,8 @@
     protected int $constitution;
     protected int $agilite;
     protected int $precision;
+    protected int $intelligence;
+    protected int $resistance;
     protected array $raceStats;
     protected string $name;
 

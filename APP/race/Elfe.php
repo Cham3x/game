@@ -8,7 +8,9 @@ class Elfe extends Race {
             'force' => 5,
             'constitution' => 5,
             'agilite' => 15,
-            'precision' => 15
+            'precision' => 15,
+            'intelligence' => 20,
+            'resistance' => 5
         ]);
     }
 }

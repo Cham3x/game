@@ -1,15 +1,15 @@
 <?php
-class Nain extends Race {
+class Paladin extends Role {
     public function __construct() {
-        parent::__construct("Nain", [
+        parent::__construct("Paladin", [
             'pv' => 20,
             'endurance' => 15,
-            'mana' => 5,
+            'mana' => 10,
             'force' => 15,
             'constitution' => 15,
-            'agilite' => 5,
-            'precision' => 5,
-            'intelligence' => 10,
+            'agilite' => 10,
+            'precision' => 10,
+            'intelligence' => 15,
             'resistance' => 20
         ]);
     }

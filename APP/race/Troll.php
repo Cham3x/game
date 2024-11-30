@@ -9,7 +9,9 @@ class Troll extends Race {
             'force' => 25,
             'constitution' => 15,
             'agilite' => -5,
-            'precision' => 5
+            'precision' => 5,
+            'intelligence' => 5,
+            'resistance' => 30
         ]);
     }
 }

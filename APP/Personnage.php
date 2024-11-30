@@ -77,6 +77,8 @@
      protected int $constitution;
      protected int $agilite;
      protected int $precision;
+     protected int $intelligence;
+     protected int $resistance;
      protected array $baseStats;
      protected Race $Race;
      protected Role $Role;
@@ -106,6 +108,8 @@
          $this->constitution = 10 + ($raceStats['constitution'] ?? 0) + ($roleStats['constitution'] ?? 0) + ($armeStats['constitution'] ?? 0);
          $this->agilite = 10 + ($raceStats['agilite'] ?? 0) + ($roleStats['agilite'] ?? 0) + ($armeStats['agilite'] ?? 0);
          $this->precision = 10 + ($raceStats['precision'] ?? 0) + ($roleStats['precision'] ?? 0) + ($armeStats['precision'] ?? 0);
+         $this->intelligence = 10 + ($raceStats['intelligence'] ?? 0) + ($roleStats['intelligence'] ?? 0) + ($armeStats['intelligence'] ?? 0);
+         $this->resistance = 10 + ($raceStats['resistance'] ?? 0) + ($roleStats['resistance'] ?? 0) + ($armeStats['resistance'] ?? 0);
      }
  
      public function __toString(): string {
@@ -119,7 +123,9 @@
                 "Force: {$this->force}\n" .
                 "Constitution: {$this->constitution}\n" .
                 "Agilité: {$this->agilite}\n" .
-                "Précision: {$this->precision}\n";
+                "Précision: {$this->precision}\n".
+                "Intelligence: {$this->intelligence}\n" .
+                "Résistance: {$this->resistance}\n" ;
      }
  
      public function attaquer() {}
@@ -130,7 +136,6 @@
  
      public function crashTheGameIfLoose() {}
  }
-
 
 
  

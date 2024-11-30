@@ -8,7 +8,9 @@ class Humain extends Race {
             'force' => 10,
             'constitution' => 10,
             'agilite' => 10,
-            'precision' => 10
+            'precision' => 10,
+            'intelligence' => 15,
+            'resistance' => 10
         ]);
     }
 }

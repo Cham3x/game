@@ -2,7 +2,7 @@
 class Elfe extends Race {
     public function __construct() {
         parent::__construct("Elfe", [
-            'pv' => 10,
+            'pv' => 5,
             'endurance' => 10,
             'mana' => 20,
             'force' => 5,

@@ -9,11 +9,25 @@
             margin-top: 20px;
         }
     </style>
+        <script>
+        // Charger les données JSON depuis le fichier
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                // Utiliser les données JSON
+                console.log(data);
+                data.forEach(character => {
+                    console.log(`Nom: ${character.name}, Race: ${character.race}, Role: ${character.role}, Arme: ${character.arme}`);
+                });
+            })
+            .catch(error => console.error('Erreur:', error));
+    </script>
 </head>
 <body>
     <?php 
     require_once "autoloader.php";
-
+$race = new Elfe() ;
+$race->raceArray($race->getName(),$race->getRaceStats());
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $personnages = [];
 
@@ -23,7 +37,7 @@
                 $race = $characterData['race'];
                 $role = $characterData['role'];
                 $arme = $characterData['arme'];
-
+        
                 switch ($race) {
                     case 'Nain':
                         $race = new Nain();
@@ -44,7 +58,10 @@
                         $race = new Gobelin();
                         break;
                 }
-                $race-> raceArray();
+        
+                
+            }
+        
 
                 switch ($role) {
                     case 'Guerrier':
@@ -79,7 +96,7 @@
 
                 $personnages[] = new Personnage($name, $race, $role, $arme);
             }
-        }
+        
 
         foreach ($personnages as $personnage) {
             echo "<pre>";

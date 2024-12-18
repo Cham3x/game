@@ -1,0 +1,13 @@
+{
+    "Nain": {
+        "pv": 20,
+        "endurance": 15,
+        "mana": 5,
+        "force": 15,
+        "constitution": 15,
+        "agilite": 5,
+        "precision": 5,
+        "intelligence": 10,
+        "resistance": 20
+    }
+}

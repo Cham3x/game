@@ -1,11 +1,14 @@
-const raceStats = { 
+const raceStats =
+
+
+  {
     'Nain': { 'pv': 20, 'endurance': 15, 'mana': 5, 'force': 15, 'constitution': 15, 'agilite': 5, 'precision': 5 , 'intelligence': 10, 'resistance': 20 },
-    'Elfe': { 'pv': 10, 'endurance': 10, 'mana': 20, 'force': 5, 'constitution': 5, 'agilite': 15, 'precision': 15 , 'intelligence': 20, 'resistance': 5},
+    'Elfe': { 'pv': 10121, 'endurance': 10, 'mana': 20, 'force': 5, 'constitution': 5, 'agilite': 15, 'precision': 15 , 'intelligence': 20, 'resistance': 5},
     'Orc': { 'pv': 30, 'endurance': 15, 'mana': 0, 'force': 20, 'constitution': 10, 'agilite': 5, 'precision': 5 , 'intelligence': 5, 'resistance': 25 },
     'Humain': { 'pv': 15, 'endurance': 10, 'mana': 10, 'force': 10, 'constitution': 10, 'agilite': 10, 'precision': 10 , 'intelligence': 15, 'resistance': 10 },
     'Gobelin': { 'pv': 15, 'endurance': 5, 'mana': 5, 'force': 5, 'constitution': 5, 'agilite': 20, 'precision': 15 , 'intelligence': 10, 'resistance': 5 },
     'Troll': { 'pv': 40, 'endurance': 20, 'mana': 0, 'force': 25, 'constitution': 15, 'agilite': -5, 'precision': 5 , 'intelligence': 5, 'resistance': 30 } 
-};
+}; 
 
 const roleStats = {
     'Guerrier': { 'pv': 20, 'endurance': 10, 'mana': 0, 'force': 15, 'constitution': 10, 'agilite': 5, 'precision': 5, 'intelligence': 5, 'resistance': 10 },
@@ -86,6 +89,7 @@ function addCharacter() {
     `;
     charactersDiv.appendChild(newCharacterDiv);
     characterIndex++;
+    document.addEventListener("DOMContentLoaded",(event)=> {updateStats(characterIndex)})
 } 
 
 

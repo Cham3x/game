@@ -1,0 +1,68 @@
+{
+    "Archer": {
+        "pv": 15,
+        "endurance": 10,
+        "mana": 5,
+        "force": 10,
+        "constitution": 10,
+        "agilite": 15,
+        "precision": 20,
+        "intelligence": 10,
+        "resistance": 5
+    },
+    "Berserker": {
+        "pv": 25,
+        "endurance": 15,
+        "mana": 0,
+        "force": 20,
+        "constitution": 15,
+        "agilite": 5,
+        "precision": 5,
+        "intelligence": 5,
+        "resistance": 10
+    },
+    "Guerrier": {
+        "pv": 20,
+        "endurance": 10,
+        "mana": 0,
+        "force": 15,
+        "constitution": 10,
+        "agilite": 5,
+        "precision": 5,
+        "intelligence": 5,
+        "resistance": 10
+    },
+    "Magicien": {
+        "pv": 5,
+        "endurance": 5,
+        "mana": 30,
+        "force": 5,
+        "constitution": 5,
+        "agilite": 10,
+        "precision": 10,
+        "intelligence": 25,
+        "resistance": 5
+    },
+    "Paladin": {
+        "pv": 20,
+        "endurance": 15,
+        "mana": 10,
+        "force": 15,
+        "constitution": 15,
+        "agilite": 10,
+        "precision": 10,
+        "intelligence": 15,
+        "resistance": 20
+    },
+    "Voleur": {
+        "pv": 10,
+        "endurance": 10,
+        "mana": 5,
+        "force": 10,
+        "constitution": 5,
+        "agilite": 20,
+        "precision": 15,
+        "intelligence": 10,
+        "resistance": 5
+    }
+}

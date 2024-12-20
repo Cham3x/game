@@ -1,7 +1,7 @@
 <?php
 class Epee extends Arme {
     public function __construct() {
-        parent::__construct("epee", [
+        parent::__construct("Epee", [
             'pv' => 20,
             'endurance' => 10,
             'mana' => 0,

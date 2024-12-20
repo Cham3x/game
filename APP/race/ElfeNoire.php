@@ -1,8 +1,8 @@
 <?php
-class Elfe extends Race {
+class ElfeNoire extends Race {
     public function __construct() {
-        parent::__construct("Elfe", [
-            'pv' => 15,
+        parent::__construct("ElfeNoire", [
+            'pv' => 25,
             'endurance' => 10,
             'mana' => 20,
             'force' => 5,

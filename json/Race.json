@@ -1,0 +1,79 @@
+{
+    "Elfe": {
+        "pv": 15,
+        "endurance": 10,
+        "mana": 20,
+        "force": 5,
+        "constitution": 5,
+        "agilite": 15,
+        "precision": 15,
+        "intelligence": 20,
+        "resistance": 5
+    },
+    "ElfeNoire": {
+        "pv": 25,
+        "endurance": 10,
+        "mana": 20,
+        "force": 5,
+        "constitution": 5,
+        "agilite": 15,
+        "precision": 15,
+        "intelligence": 20,
+        "resistance": 5
+    },
+    "Gobelin": {
+        "pv": 15,
+        "endurance": 5,
+        "mana": 5,
+        "force": 5,
+        "constitution": 5,
+        "agilite": 20,
+        "precision": 15,
+        "intelligence": 10,
+        "resistance": 5
+    },
+    "Humain": {
+        "pv": 15,
+        "endurance": 10,
+        "mana": 10,
+        "force": 10,
+        "constitution": 10,
+        "agilite": 10,
+        "precision": 10,
+        "intelligence": 15,
+        "resistance": 10
+    },
+    "Nain": {
+        "pv": 20,
+        "endurance": 15,
+        "mana": 5,
+        "force": 15,
+        "constitution": 15,
+        "agilite": 5,
+        "precision": 5,
+        "intelligence": 10,
+        "resistance": 20
+    },
+    "Orc": {
+        "pv": 3044,
+        "endurance": 15,
+        "mana": 0,
+        "force": 20,
+        "constitution": 10,
+        "agilite": 5,
+        "precision": 5,
+        "intelligence": 5,
+        "resistance": 25
+    },
+    "Troll": {
+        "pv": 40,
+        "endurance": 20,
+        "mana": 0,
+        "force": 25,
+        "constitution": 15,
+        "agilite": -5,
+        "precision": 5,
+        "intelligence": 5,
+        "resistance": 30
+    }
+}

@@ -1,190 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>Document</title>
+</head>
+<body>    
 <?php 
-include 'autoloader.php';
+require_once "autoloader.php";
 
+// Lire les données JSON
+$jsonRace = file_get_contents('./json/Race.json');
+$raceData = json_decode($jsonRace, true);
 
-// Fonction pour obtenir toutes les classes enfants de Race
-function getRaceChildren() {
-    $raceChildren = [];
-    foreach (get_declared_classes() as $class) {
-        if (is_subclass_of($class, 'Race')) {
-            $raceChildren[] = $class;
+$jsonRole = file_get_contents('./json/Role.json');
+$roleData = json_decode($jsonRole, true);
+
+$jsonArme = file_get_contents('./json/Arme.json');
+$armeData = json_decode($jsonArme, true);
+
+function instantiateClasses($data, $directory) {
+    $instances = [];
+    foreach (glob($directory . '*.php') as $filename) {
+        $className = basename($filename, '.php');
+        if (class_exists($className) && $className != "Race" && $className != "Role" && $className != "Arme") {
+            if (isset($data[$className])) {
+                $instances[] = new $className($className, $data[$className]);
+            } else {
+                $instances[] = new $className($className, []);
+            }
         }
     }
-    return $raceChildren;
+    return $instances;
 }
 
-// Instancier dynamiquement chaque classe enfant et récupérer leurs données
-$raceClasses = getRaceChildren();
-$data = [];
-foreach ($raceClasses as $raceClass) {
-    $race = new $raceClass();
-    $data[] = [
-        'name' => $race->getName(),
-        'stats' => $race->getRaceStats()
-    ];
-}
+// Instancier toutes les classes enfants de Race, Role et Arme
+$raceInstances = instantiateClasses($raceData, './APP/race/');
+$roleInstances = instantiateClasses($roleData, './APP/role/');
+$armeInstances = instantiateClasses($armeData, './APP/arme/');
 
-// Lire le fichier JSON
-$jsonFile = 'data.json';
-if (file_exists($jsonFile)) {
-    $jsonData = file_get_contents($jsonFile);
-    $existingData = json_decode($jsonData, true);
-    if ($existingData === null) {
-        $existingData = [];
-    }
-} else {
-    $existingData = [];
-}
-
-// Fusionner les nouvelles données avec les données existantes
-$mergedData = array_merge($existingData, $data);
-
-// Réécrire le fichier JSON
-file_put_contents($jsonFile, json_encode($mergedData, JSON_PRETTY_PRINT));
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['characters'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $personnages = [];
-
     foreach ($_POST['characters'] as $characterData) {
         if (isset($characterData['name'], $characterData['race'], $characterData['role'], $characterData['arme'])) {
-            $name = htmlspecialchars($characterData['name']);
-            $race = htmlspecialchars($characterData['race']);
-            $role = htmlspecialchars($characterData['role']);
-            $arme = htmlspecialchars($characterData['arme']);
+            $name = $characterData['name'];
+            $race = $characterData['race'];
+            $role = $characterData['role'];
+            $arme = $characterData['arme'];
 
-            switch ($race) {
-                case 'Nain':
-                    $race = new Nain();
+            // Trouver l'instance de la race appropriée
+            $raceInstance = null;
+            foreach ($raceInstances as $instance) {
+                if (get_class($instance) === $race) {
+                    $raceInstance = $instance;
                     break;
-                case 'Elfe':
-                    $race = new Elfe();
-                    break;
-                case 'Orc':
-                    $race = new Orc();
-                    break;
-                case 'Humain':
-                    $race = new Humain();
-                    break;
-                case 'Troll':
-                    $race = new Troll();
-                    break;
-                case 'Gobelin':
-                    $race = new Gobelin();
-                    break;
+                }
             }
 
-            switch ($role) {
-                case 'Guerrier':
-                    $role = new Guerrier();
-                    break;
-                case 'Voleur':
-                    $role = new Voleur();
-                    break;
-                case 'Paladin':
-                    $role = new Paladin();
-                    break;
-                case 'Magicien':
-                    $role = new Magicien();
-                    break;
-                case 'Archer':
-                    $role = new Archer();
-                    break;
-                case 'Berserker':
-                    $role = new Berserker();
-                    break;
+            if (!$raceInstance) {
+                throw new Exception("Race inconnue: $race");
             }
 
-            switch ($arme) {
-                case 'Epee':
-                    $arme = new Epee();
+            // Trouver l'instance du rôle appropriée
+            $roleInstance = null;
+            foreach ($roleInstances as $instance) {
+                if (get_class($instance) === $role) {
+                    $roleInstance = $instance;
                     break;
-                default:
-                    $arme = new Epee();
-                    break;
+                }
             }
 
-            $personnages[] = new Personnage($name, $race, $role, $arme);
+            if (!$roleInstance) {
+                throw new Exception("Rôle inconnu: $role");
+            }
+
+            // Trouver l'instance de l'arme appropriée
+            $armeInstance = null;
+            foreach ($armeInstances as $instance) {
+                if (get_class($instance) === $arme) {
+                    $armeInstance = $instance;
+                    break;
+                }
+            }
+
+            if (!$armeInstance) {
+                throw new Exception("Arme inconnue: $arme");
+            }
+
+            $personnages[] = new Personnage($name, $raceInstance, $roleInstance, $armeInstance);
         }
     }
 
+    // Afficher les personnages dans une balise <article>
+    echo "<article>";
     foreach ($personnages as $personnage) {
         echo "<pre>";
         echo $personnage;
         echo "</pre>";
     }
+    echo "</article>";
 } else {
     ?>
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Créer des Personnages</title>
-        <style>
-            .character-stats {
-                margin-top: 20px;
-            }
-        </style>
-        <script>
-            // Charger les données JSON depuis le fichier
-            fetch('data.json')
-                .then(response => response.json())
-                .then(data => {
-                    // Utiliser les données JSON
-                    console.log(data);
-                    data.forEach(character => {
-                        console.log(`Nom: ${character.name}, Race: ${character.race}, Role: ${character.role}, Arme: ${character.arme}`);
-                    });
-                })
-                .catch(error => console.error('Erreur:', error));
-        </script>
-    </head>
-    <body>
-        <form method="post" action="">
-            <div id="characters">
-                <div class="character">
-                    <label for="name">Nom:</label>
-                    <input type="text" id="name" name="characters[0][name]" required><br>
+    <form method="post" action="">
+        <div id="characters">
+            <div class="character">
+                <label for="name">Nom:</label>
+                <input type="text" id="name" name="characters[0][name]" required><br>
 
-                    <label for="race">Race:</label>
-                    <select id="race" name="characters[0][race]" required onchange="updateStats(0)">
-                        <option value="Nain">Nain</option>
-                        <option value="Gobelin">Gobelin</option>
-                        <option value="Troll">Troll</option>
-                        <option value="Humain">Humain</option>
-                        <option value="Orc">Orc</option>
-                        <option value="Elfe">Elfe</option>
-                    </select><br>
+                <label for="race">Race:</label>
+                <select id="race" name="characters[0][race]" required onchange="updateStats(0)">
+                    <?php
+                    foreach ($raceData as $raceName => $stats) {
+                        echo "<option value=\"$raceName\">$raceName</option>";
+                    }
+                    ?>
+                </select><br>
+                <label for="role">Rôle:</label>
+                <select id="role" name="characters[0][role]" required onchange="updateStats(0)">
+                    <?php
+                    foreach ($roleData as $roleName => $stats) {
+                        echo "<option value=\"$roleName\">$roleName</option>";
+                    }
+                    ?>
+                </select><br>
 
-                    <label for="role">Rôle:</label>
-                    <select id="role" name="characters[0][role]" required onchange="updateStats(0)">
-                        <option value="Guerrier">Guerrier</option>
-                        <option value="Berserker">Berserker</option>
-                        <option value="Voleur">Voleur</option>
-                        <option value="Magicien">Magicien</option>
-                        <option value="Paladin">Paladin</option>
-                        <option value="Archer">Archer</option>
-                    </select><br>
+                <label for="arme">Arme:</label>
+                <select id="arme" name="characters[0][arme]" required onchange="updateStats(0)">
+                    <?php
+                    foreach ($armeData as $armeName => $stats) {
+                        echo "<option value=\"$armeName\">$armeName</option>";
+                    }
+                    ?>
+                </select><br>
 
-                    <label for="arme">Arme:</label>
-                    <select id="arme" name="characters[0][arme]" required onchange="updateStats(0)">
-                        <option value="Epee">Épée</option>
-                    </select><br>
-
-                    <div class="character-stats" id="stats-0"></div>
-                </div>
+                <div class="character-stats" id="stats-0"></div>
             </div>
-            <button type="button" onclick="addCharacter()">Ajouter un personnage</button>
-            <input type="submit" value="Créer les Personnages">
-        </form>
-
-        <script src="updateStats.js"></script>
-        <script>document.addEventListener("DOMContentLoaded", (event) => { updateStats(0) })</script>
-        <script>
-            let characterIndex = 1;
-        </script>
-    </body>
-    </html>
+        </div>
+        <button type="button" onclick="addCharacter()">Ajouter un personnage</button>
+        <input type="submit" value="Créer les Personnages">
+    </form>
+    <script src="updateStats.js"></script>
+    <script>
+        let characterIndex = 1;
+        const raceData = <?php echo json_encode($raceData); ?>;
+        const roleData = <?php echo json_encode($roleData); ?>;
+        const armeData = <?php echo json_encode($armeData); ?>;
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", (event) => {
+            updateStats(0);
+        });
+    </script>
     <?php
 }
 ?>
+</body>
+</html>
